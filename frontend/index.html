@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Skillbus | Система управления контактными данными клиентов</title>
+  <link rel="stylesheet" href="css/normalize.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/media.css">
+  <link rel="icon" href="img/logo.svg" type="image/svg">
+  <script src="main.js" defer></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => clientsListApp());
+  </script>
+</head>
+
+<body class="page">
+  <header class="header">
+    <div class="container header__container">
+      <a href="#" class="logo header__logo">
+        <img class="img-logo" src="img/logo.svg" alt="Логотип Skillbus">
+      </a>
+      <form class="form header__form">
+        <input type="text" name="search-client" id="inp-search-client" placeholder="Введите запрос"
+          class="form__search">
+      </form>
+    </div>
+  </header>
+  <main class="main">
+    <section class="clients">
+      <div id="clients__container" class="container clients__container">
+        <h2 class="clients__title">Клиенты</h2>
+        <table class="clients__table table">
+          <thead class="table__top">
+            <tr class="table__sort-line">
+              <th id="id" class="table__column table__column_id table__column_sorted" data-sort-direction="asc">
+                <span class="column__text">ID</span>
+              </th>
+              <th id="surname" class="table__column table__column_fullname">
+                <span class="column__text">Фамилия Имя Отчество</span>
+                <span class="column__alphabet-sort">А-Я</span>
+              </th>
+              <th id="createdAt" class="table__column table__column_created-time">
+                <span class="column__text">Дата и&nbsp;время создания</span>
+              </th>
+              <th id="updatedAt" class="table__column table__column_updated-time">
+                <span class="column__text">Последние изменения</span>
+              </th>
+              <th id="contacts" class="table__column">Контакты</th>
+              <th id="actions" class="table__column">Действия</th>
+            </tr>
+          </thead>
+          <tbody id="table__main" class="table__main">
+          </tbody>
+        </table>
+        <div id="loading-spinner" class="clients__loading-spinner animate__animated">
+          <span class="loader"></span>
+          <!-- <button class="btn-reset btn-secondary">Добавить клиента</button>
+          <button class="btn-reset btn_submit">Добавить клиента</button> -->
+
+        </div>
+      </div>
+    </section>
+  </main>
+</body>
+
+</html>
