@@ -68,7 +68,7 @@ img {
 
 /* buttons */
 
-.btn-reset {
+.btn {
   padding: 0;
   border: none;
   outline: none;
@@ -78,26 +78,26 @@ img {
   cursor: pointer;
 }
 
-.btn-secondary {
+.btn_secondary {
   padding: 11.5px 26.5px;
   border: 1px solid var(--color-firm);
   color: var(--color-firm);
   transition: color 0.3s ease-in-out, border 0.3s ease-in-out, background-color 0.3s ease-in-out;
 }
 
-.btn-secondary:focus-visible {
+.btn_secondary:focus-visible {
   color: var(--color-white);
   border: 1px solid var(--color-firm);
   background-color: var(--color-purple);
 }
 
-.btn-secondary:hover {
+.btn_secondary:hover {
   color: var(--color-white);
   border: 1px solid var(--color-firm);
   background-color: var(--color-light-purple);
 }
 
-.btn-secondary:active {
+.btn_secondary:active {
   color: var(--color-grey);
   border: 1px solid var(--color-grey);
   background-color: transparent;
@@ -105,7 +105,7 @@ img {
 
 .btn_submit {
   position: relative;
-  margin-bottom: 5px;
+  margin-bottom: 9px;
   padding: 11.5px 26.5px;
   border: 1px solid var(--color-firm);
   color: var(--color-white);
@@ -129,6 +129,7 @@ img {
 }
 
 .btn_submit_active {
+  position: relative;
   padding-left: 35px;
 }
 
@@ -145,14 +146,14 @@ img {
   animation: rotate 2s linear infinite;
 }
 
-.btn-edit-client {
+.btn_edit-client {
   position: relative;
   padding-left: 17px;
   color: var(--color-black);
   transition: color 0.3s ease-in-out;
 }
 
-.btn-edit-client::before {
+.btn_edit-client::before {
   content: "";
   position: absolute;
   width: 16px;
@@ -164,23 +165,23 @@ img {
   background-size: contain;
 }
 
-.btn-edit-client_active::before {
+.btn_edit-client_active::before {
   background-image: url("../img/load-purple.svg");
   animation: rotate 2s linear infinite;
 }
 
-.btn-edit-client:hover {
+.btn_edit-client:hover {
   color: var(--color-firm);
 }
 
-.btn-delete-client {
+.btn_delete-client {
   position: relative;
   padding-left: 17px;
   color: var(--color-black);
   transition: color 0.3s ease-in-out;
 }
 
-.btn-delete-client::before {
+.btn_delete-client::before {
   content: "";
   position: absolute;
   width: 16px;
@@ -192,16 +193,16 @@ img {
   background-size: contain;
 }
 
-.btn-delete-client_active::before {
+.btn_delete-client_active::before {
   background-image: url("../img/load-red.svg");
   animation: rotate 2s linear infinite;
 }
 
-.btn-delete-client:hover {
+.btn_delete-client:hover {
   color: var(--color-red);
 }
 
-.btn-add-contact {
+.btn_add-contact {
   position: relative;
   padding-left: 17px;
   color: var(--color-black);
@@ -210,7 +211,7 @@ img {
   transition: color 0.3s ease-in-out;
 }
 
-.btn-add-contact::before {
+.btn_add-contact::before {
   content: "";
   position: absolute;
   width: 16px;
@@ -225,21 +226,21 @@ img {
   transition: background-image 0.3s ease-in-out;
 }
 
-.btn-add-contact:hover {
+.btn_add-contact:hover {
   color: var(--color-firm);
 }
 
-.btn-add-contact:hover::before {
+.btn_add-contact:hover::before {
   background-image: url("../img/add_circle_hover.svg");
 }
 
-.btn-add-client {
+.btn_add-client {
   position: relative;
   margin: 0 auto;
   padding-left: 43.5px;
 }
 
-.btn-add-client::before {
+.btn_add-client::before {
   content: "";
   position: absolute;
   width: 22px;
@@ -254,11 +255,11 @@ img {
   transition: background-image 0.3s ease-in-out;
 }
 
-.btn-add-client:hover::before {
+.btn_add-client:hover::before {
   background-image: url("../img/add-client_hover.svg");
 }
 
-.btn-cancel {
+.btn_cancel {
   color: var(--color-black);
   font-size: 12px;
   text-decoration-line: underline;
@@ -475,10 +476,18 @@ img {
 
 /* modal */
 
+.modal-delete-client {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+
+
 .modal {
   position: relative;
   width: 450px;
-  padding: 24px 30px;
+  padding: 26px 30px;
   color: var(--color-black);
   border: none;
 }
@@ -491,7 +500,7 @@ img {
   display: flex;
   align-items: flex-end;
   gap: 9px;
-  margin-bottom: 16px;
+  margin-bottom: 20px;
 }
 
 .modal__title {
@@ -506,33 +515,36 @@ img {
   font-size: 12px;
 }
 
-.modal-delete-client {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
 .form {
   display: flex;
   flex-direction: column;
   align-items: center;
 }
 
+.form__top {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  width: 100%;
+  margin-bottom: 26px;
+}
+
 .form__label {
   display: flex;
   flex-direction: column;
   width: 100%;
-  margin-bottom: 15px;
-}
-
-.form__label:last-of-type {
-  margin-bottom: 25px;
 }
 
 .form__input {
-  padding: 3px 0;
+  padding: 5px 0;
+  font-size: 14px;
+  font-weight: 600;
   border: none;
   border-bottom: 1px solid var(--color-txt-grey);
+}
+
+.form__input:focus-visible {
+  outline: none;
 }
 
 .form__text {
@@ -540,17 +552,19 @@ img {
   font-size: 10px;
 }
 
-.modal__bottom {
+.contacts-modal {
   display: flex;
-  align-items: center;
   flex-direction: column;
-  justify-content: center;
+  align-items: center;
   width: calc(100% + 60px);
-  margin-bottom: 25px;
+  margin-bottom: 29px;
   padding: 8px 0;
-  background-color: #efeef2;
+  background-color: rgba(200, 197, 209, 0.2);
 }
 
+.contacts-modal:has(.contacts-modal__list) {
+  padding: 25px 0;
+}
 
 .form__text_required::after {
   content: "*";
@@ -570,34 +584,35 @@ img {
 
 /* modal contacts */
 
-/* .contacts-container_modal {
-
-} */
-
-.contacts-container_modal {
-  width: calc(100% - 60px);
+.contacts-modal__list {
   display: flex;
   flex-direction: column;
   gap: 15px;
+  margin-bottom: 25px;
 }
-.modal__contact {
+
+.contacts-modal__item {
   display: flex;
   height: 37px;
   border: 1px solid var(--color-grey);
 }
 
-.modal__type-selector {
+.contacts-modal__type-selector {
   min-width: 123px;
   padding: 10px 12px;
   font-size: 12px;
   background-color: #E7E5EB;
 }
 
-.modal__input {
-  width: 263px;
+.contacts-modal__input {
+  width: 239px;
   padding: 8px 12px;
   font-size: 14px;
   border: none;
+}
+
+.contacts-modal__input:focus-visible {
+  outline: none;
 }
 
 .btn_delete-modal {

@@ -51,13 +51,13 @@
     searchInput: document.getElementById(`inp-search-client`),
   }
 
-  function getClientItem(clientObj) {
+  function createClientItem(clientObj) {
+
+    const itemRow = createElement(`tr`, [`contact-item`]);
 
     const [id, fullName, createdDate, lastUpdateDate, contacts, actionsButtons] = ['td', 'td', 'td', 'td', 'td', 'td'].map(tag => {
       return createElement(tag, [`col`]);
     });
-
-    const itemRow = createElement(`tr`, [`contact-item`]);
 
     contacts.classList.add(`col_contacts`);
 
@@ -133,8 +133,8 @@
 
   function createActionsButtons(clientObj) {
     const actionsButtonsItem = createElement(`div`, [`col_actions`]);
-    const editButton = createElement(`button`, [`btn-reset`, `btn-edit-client`], `Изменить`);
-    const deleteButton = createElement(`button`, [`btn-reset`, `btn-delete-client`], `Удалить`);
+    const editButton = createElement(`button`, [`btn`, `btn_edit-client`], `Изменить`);
+    const deleteButton = createElement(`button`, [`btn`, `btn_delete-client`], `Удалить`);
 
     editButton.addEventListener(`click`, () => openClientModalWindow(clientObj));
     deleteButton.addEventListener(`click`, () => openDeleteModalWindow(clientObj));
@@ -146,35 +146,36 @@
   function openDeleteModalWindow(clientObj) {
 
     const modalWindow = createElement(`dialog`, [`modal`, `modal-delete-client`, `animate__animated`, `animate__fadeInDown`]);
-    const modalCenter = createElement(`div`, [`modal__bottom`]);
+    const contacts = createElement(`div`, [`modal__bottom`]);
     const title = createElement(`h2`, [`modal__title`], `Удалить клиента`);
     const text = createElement(`p`, [`text-confirm`], `Вы действительно хотите удалить данного клиента?`)
 
     const errorText = createElement(`p`, [`text-error`])
 
-    const closeButton = createElement(`buttton`, [`btn-reset`, `btn_close`]);
-    const submitButton = createElement(`button`, [`btn-reset`, `btn_submit`], `Удалить`);
-    const cancelButton = createElement(`button`, [`btn-reset`, `btn-cancel`], `Отмена`);
+    const closeButton = createElement(`buttton`, [`btn`, `btn_close`]);
+    const submitButton = createElement(`button`, [`btn`, `btn_submit`], `Удалить`);
+    const cancelButton = createElement(`button`, [`btn`, `btn_cancel`], `Отмена`);
 
-    modalWindow.append(closeButton, title, modalCenter, text, submitButton, cancelButton);
+    modalWindow.append(closeButton, title, contacts, text, submitButton, cancelButton);
 
     pageElements.clientsContainer.append(modalWindow);
     modalWindow.showModal();
 
     addCloseModalEvent(cancelButton, closeButton, modalWindow);
-    addClientDeleteEvent(submitButton, clientObj, modalWindow, errorText, modalCenter);
+    addClientDeleteEvent(submitButton, clientObj, modalWindow, errorText, contacts);
   }
 
   function openClientModalWindow(clientObj) {
 
     const modalWindow = createElement(`dialog`, [`clients__edit-modal`, `modal`, `animate__animated`, `animate__fadeInDown`]);
-    const form = createElement(`form`, [`modal__form`, `form`]);
 
     const modalTop = createElement(`div`, [`modal__top`]);
-    const modalCenter = createElement(`div`, [`modal__bottom`]);
-
+    const closeButton = createElement(`buttton`, [`btn`, `btn_close`]);
     const title = createElement(`h2`, [`modal__title`]);
 
+    const form = createElement(`form`, [`modal__form`, `form`]);
+
+    const formTop = createElement(`div`, [`form__top`]);
     const surnameLabel = createElement(`label`, [`form__label`]);
     const surnameSpan = createElement(`span`, [`form__text`, `form__text_required`], `Фамилия`);
     const surnameInput = createElement(`input`, [`form__input`]);
@@ -190,20 +191,22 @@
     const lastNameInput = createElement(`input`, [`form__input`]);
     lastNameLabel.append(lastNameSpan, lastNameInput);
 
-    const buttonAddContact = createElement(`button`, [`btn-reset`, `btn-add-contact`], `Добавить контакт`);
+    const contacts = createElement(`div`, [`contacts-modal`])
+
+    const buttonAddContact = createElement(`button`, [`btn`, `btn_add-contact`], `Добавить контакт`);
 
     const errorText = createElement(`p`, [`text-error`])
 
-    const closeButton = createElement(`buttton`, [`btn-reset`, `btn_close`]);
-    const submitButton = createElement(`button`, [`btn-reset`, `btn_submit`], `Сохранить`);
-    const cancelButton = createElement(`button`, [`btn-reset`, `btn-cancel`], `Удалить клиента`);
+    const submitButton = createElement(`button`, [`btn`, `btn_submit`], `Сохранить`);
+    const cancelButton = createElement(`button`, [`btn`, `btn_cancel`], `Удалить клиента`);
 
-
+    formTop.append(surnameLabel, nameLabel, lastNameLabel);
     modalTop.append(closeButton, title);
-    modalCenter.append(buttonAddContact);
-    form.append(surnameLabel, nameLabel, lastNameLabel, modalCenter, submitButton, cancelButton);
+    contacts.append(buttonAddContact)
+    form.append(formTop, contacts, submitButton, cancelButton);
     modalWindow.append(modalTop, form);
     pageElements.clientsContainer.append(modalWindow);
+
     modalWindow.showModal();
 
     if (clientObj === null) {
@@ -212,6 +215,7 @@
 
       addCloseModalEvent(cancelButton, closeButton, modalWindow);
       addClientChangeEvent(`create`);
+
     } else {
       title.textContent = `Изменить данные`;
 
@@ -221,10 +225,12 @@
 
       const id = createElement(`span`, [`modal__id`], `ID: ${clientObj.id}`);
 
-      modalCenter.append(renderContactsInModal(clientObj))
+      if (clientObj.contacts.length !== 0) {
+        contacts.prepend(renderContactsInModal(clientObj))
+      }
       modalTop.append(id);
 
-      addClientDeleteEvent(cancelButton, clientObj, modalWindow, errorText, modalCenter)
+      addClientDeleteEvent(cancelButton, clientObj, modalWindow, errorText, contacts)
       addCloseModalEvent(null, closeButton, modalWindow);
       addClientChangeEvent(`edit`);
     }
@@ -242,7 +248,7 @@
 
             cancelAddStudent = true;
             errorText.textContent = `Ошибка: Одно из полей пустое`
-            modalCenter.after(errorText);
+            contacts.after(errorText);
             setTimeout(() => errorText.remove(), 3000);
           }
         });
@@ -282,47 +288,61 @@
             })
           }
 
-          lookResponse(response, modalWindow, errorText, modalCenter);
+          lookResponse(response, modalWindow, errorText, contacts);
           submitButton.classList.remove('btn_submit_active')
         }
       })
     }
+
+    addNewContactEvent(errorText, contacts);
+
+    function addNewContactEvent(errorText, contacts) {
+      buttonAddContact.addEventListener(`click`, async (e) => {
+        e.preventDefault();
+        createContactItem({type: null, value: null} , errorText, contacts)
+      })
+    }
   }
 
-  function renderContactsInModal(clientObj, errorText, modalCenter) {
-    const contactsContainer = createElement(`ul`, [`list-reset`, `contacts-container_modal`]);
+  function renderContactsInModal(clientObj, errorText, contacts) {
+    const contactsContainer = createElement(`ul`, [`list-reset`, `contacts-modal__list`]);
 
     clientObj.contacts.forEach((contact) => {
-      const contactItem = createElement(`li`, [`modal__contact`]);
-      const contactTypeSelector = createElement(`div`, [`modal__type-selector`], `${contact.type}`);
-      const contactInput = createElement(`input`, [`modal__input`], `${contact.value}`);
-      const contactDeleteButton = createElement(`button`, [`btn-reset`, `btn_delete-modal`]);
-
-      contactInput.placeholder = `Введите данные контакта`
-
-      contactInput.value = contact.value;
-
-      contactItem.append(contactTypeSelector, contactInput, contactDeleteButton);
-      contactsContainer.append(contactItem);
-
-      contactDeleteButton.addEventListener(`click`, async (e) => {
-        e.preventDefault();
-        contactItem.remove();
-        const response = await serverHandlers.editClient({
-          id: clientObj.id,
-          contacts: clientObj.contacts.filter(item => (item.value !== contact.value) && (item.type !== contact.type)),
-        })
-        lookResponse(response, null, errorText, modalCenter);
-      })
+      contactsContainer.append(createContactItem(contact, errorText, contacts))
     })
 
     return contactsContainer;
   }
 
+  function createContactItem(contact, errorText, contacts) {
+    const contactItem = createElement(`li`, [`contacts-modal__item`]);
+    const contactTypeSelector = createElement(`div`, [`contacts-modal__type-selector`], `${contact.type}`);
+    const contactInput = createElement(`input`, [`contacts-modal__input`], `${contact.value}`);
+    const contactDeleteButton = createElement(`button`, [`btn`, `btn_delete-modal`]);
+
+    contactInput.placeholder = `Введите данные контакта`
+
+    contactInput.value = contact.value;
+
+    contactItem.append(contactTypeSelector, contactInput, contactDeleteButton);
+
+    contactDeleteButton.addEventListener(`click`, async (e) => {
+      e.preventDefault();
+      contactItem.remove();
+      const response = await serverHandlers.editClient({
+        id: clientObj.id,
+        contacts: clientObj.contacts.filter(item => (item.value !== contact.value) && (item.type !== contact.type)),
+      })
+      lookResponse(response, null, errorText, contacts);
+    })
+
+    return contactItem
+  }
+
   async function pagePreparation() { // Загрузка страницы
     closeElement(pageElements.loadingSpinner);
 
-    const addClientButton = createElement(`button`, [`btn-reset`, `btn-secondary`, `btn-add-client`], `Добавить клиента`);
+    const addClientButton = createElement(`button`, [`btn`, `btn_secondary`, `btn_add-client`], `Добавить клиента`);
 
     addClientButton.addEventListener(`click`, () => openClientModalWindow(null))
     pageElements.clientsContainer.append(addClientButton);
@@ -333,11 +353,13 @@
     return newArr.sort((a, b) => (!dir ? a[prop] < b[prop] : a[prop] > b[prop]) ? -1 : 1);
   }
 
-  function eventlistenerSortForm(clientsList) { // Сортировка клиентов
+  function eventlistenerSortForm() { // Сортировка клиентов
     const tableColumns = Array.from(pageElements.tableColumns).splice(0, 4);
 
     tableColumns.forEach(column => {
-      column.addEventListener(`click`, () => {
+      column.addEventListener(`click`, async () => {
+        const clientsList = await serverHandlers.getClientsList();
+
         let sortDirection = column.getAttribute("data-sort-direction") === "asc" ? "desc" : "asc";
         column.setAttribute("data-sort-direction", sortDirection);
 
@@ -362,7 +384,7 @@
     pageElements.table.innerHTML = ``;
 
     clientsList.forEach(client => {
-      pageElements.table.append(getClientItem(client));
+      pageElements.table.append(createClientItem(client));
     });
   }
 
@@ -425,7 +447,7 @@
     };
   }
 
-  async function lookResponse(response, modalWindow, errorText, modalCenter) { // Просмотр ответа сервера на запрос
+  async function lookResponse(response, modalWindow, errorText, contacts) { // Просмотр ответа сервера на запрос
     try {
       switch (response.status) {
         case 200:
@@ -435,7 +457,7 @@
           await handleStatus201(response, modalWindow);
           break;
         default:
-          handleError(response, errorText, modalCenter);
+          handleError(response, errorText, contacts);
       }
     } catch (error) {
       console.error(error);
@@ -452,15 +474,15 @@
   }
 
   async function handleStatus201(response, modalWindow) {
-    const newClient = getClientItem(response.data);
+    const newClient = createClientItem(response.data);
     newClient.classList.add(`animate__animated`, `animate__bounceInRight`);
     pageElements.table.append(newClient);
     closeElement(modalWindow);
   }
 
-  function handleError(response, errorText, modalCenter) {
+  function handleError(response, errorText, contacts) {
     errorText.textContent = `Ошибка: Код ${response.status}. Место ошибки: ${response.status.field}. ${response.data.message}`;
-    modalCenter.after(errorText);
+    contacts.after(errorText);
   }
 
   function addCloseModalEvent(cancelButton, closeButton, modalWindow) { // Добавление ивента закрытия модального окна
@@ -473,14 +495,14 @@
     closeButton.addEventListener(`click`, () => closeElement(modalWindow));
   }
 
-  function addClientDeleteEvent(button, { id }, modalWindow, errorText, modalCenter) { // Добавление ивента удаления клиента
+  function addClientDeleteEvent(button, { id }, modalWindow, errorText, contacts) { // Добавление ивента удаления клиента
     button.addEventListener(`click`, async (e) => {
       e.preventDefault()
 
       button.classList.add(`btn_submit_active`);
       const response = await serverHandlers.deleteClient({ id: id });
 
-      lookResponse(response, modalWindow, errorText, modalCenter)
+      lookResponse(response, modalWindow, errorText, contacts)
       button.classList.remove('btn_submit_active')
     })
   }
@@ -497,7 +519,7 @@
 
     const clientsList = await serverHandlers.getClientsList();
     renderClientsList(clientsList);
-    eventlistenerSortForm(clientsList);
+    eventlistenerSortForm();
     eventlistenerSearch(clientsList);
   }
 
