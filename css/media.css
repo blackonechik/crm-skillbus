@@ -38,3 +38,18 @@
         overflow: scroll hidden;
     }
 }
+
+@media (max-width: 576px) {
+    .clients__edit-modal {
+        padding: 24px 15px;
+    }
+
+    .contacts-modal__type-selector {
+        min-width: 110px;
+    }
+
+    .contacts-modal__input {
+        padding: 9px 6px;
+    }
+
+}

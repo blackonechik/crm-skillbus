@@ -22,7 +22,6 @@ img {
 /* global */
 
 :root {
-  --animate-duration: 0.5s;
   --color-black: #333;
   --color-txt-grey: #B0B0B0;
   --color-grey: #C8C5D1;
@@ -34,6 +33,7 @@ img {
   --color-red: #F06A4D;
   --color-orange: #E6B127;
   --color-green: #34C759;
+  --animate-duration: 0.5s;
 }
 
 
@@ -328,6 +328,7 @@ img {
 }
 
 .btn_delete-modal {
+  flex-shrink: 0;
   width: 27px;
   height: 37px;
   background-image: url("../img/cancel.svg");
@@ -654,6 +655,7 @@ img {
   display: flex;
   flex-direction: column;
   gap: 15px;
+  width: calc(100% - 60px);
   margin-bottom: 25px;
 }
 
@@ -673,7 +675,7 @@ img {
 }
 
 .contacts-modal__input {
-  width: 239px;
+  width: 100%;
   padding: 8px 12px;
   font-size: 14px;
   border: none;
