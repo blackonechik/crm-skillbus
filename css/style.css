@@ -488,6 +488,7 @@ img {
   z-index: 1;
   bottom: 200%;
   left: 50%;
+  width: max-content;
   padding: 7px 14px;
   color: var(--color-white);
   font-size: 12px;
@@ -496,6 +497,7 @@ img {
   visibility: hidden;
   opacity: 0;
   transform: translateX(-50%);
+  transition: opacity 0.3s ease-in-out;
 }
 
 .tooltip::after {

@@ -1,6 +1,6 @@
 (() => {
   const api = {
-    endpointUrl: 'https://crm-backend-bdn4.onrender.com/api/clients',
+    endpointUrl: 'http://localhost:3000/api/clients',
 
     async getClientsList() {
       const response = await fetch(this.endpointUrl);
@@ -349,17 +349,16 @@
 
     const contactTypesContainer = createElement(`ul`, [`list-reset`, `contacts-modal__options`, `options`]);
     const phoneItem = createElement(`li`, [`options__item`], `Телефон`);
-    const extraPhoneItem = createElement(`li`, [`options__item`], `Доп. телефон`);
-    const twitterItem = createElement(`li`, [`options__item`], `Twitter`);
     const emailItem = createElement(`li`, [`options__item`], `Email`);
-    const vkItem = createElement(`li`, [`options__item`], `ВКонтакте`);
     const facebookItem = createElement(`li`, [`options__item`], `Facebook`);
+    const vkItem = createElement(`li`, [`options__item`], `ВКонтакте`);
+    const anotherItem = createElement(`li`, [`options__item`], `Другое`);
 
 
     contactInput.placeholder = `Введите данные контакта`
     contactInput.value = contact.value;
 
-    const contactTypes = [phoneItem, extraPhoneItem, twitterItem, emailItem, vkItem, facebookItem];
+    const contactTypes = [phoneItem, emailItem, facebookItem, vkItem, anotherItem];
 
     contactTypesContainer.append(...contactTypes);
     contactTypeSelector.append(contactType, contactTypesContainer);
