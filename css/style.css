@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;700&display=swap');
+
 html {
   box-sizing: border-box;
 }
@@ -33,6 +35,8 @@ img {
   --color-orange: #E6B127;
   --color-green: #34C759;
 }
+
+
 
 .page {
   min-width: 320px;
