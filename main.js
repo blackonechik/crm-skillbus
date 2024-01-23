@@ -1,6 +1,6 @@
 (() => {
   const api = {
-    endpointUrl: 'http://localhost:3000/api/clients',
+    endpointUrl: 'https://crm-backend-bdn4.onrender.com/api/clients',
 
     async getClientsList() {
       const response = await fetch(this.endpointUrl);
