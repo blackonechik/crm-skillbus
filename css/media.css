@@ -1,0 +1,40 @@
+@media (max-width: 992px) {
+    .col {
+        padding: 13px;
+    }
+
+    .form__search {
+        max-width: 581px;
+    }
+}
+
+@media (max-width: 768px) {
+
+    .main {
+        padding: 30px 0;
+    }
+
+    .header {
+        padding: 8px;
+    }
+
+    .container {
+        padding: 0 10px;
+    }
+
+    .header__container {
+        justify-content: center;
+    }
+
+    .header__form {
+        display: none;
+    }
+
+    .clients__container {
+        flex-direction: row;
+    }
+
+    .clients__table {
+        overflow: scroll hidden;
+    }
+}

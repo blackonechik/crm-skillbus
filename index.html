@@ -6,7 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Skillbus | Система управления контактными данными клиентов</title>
   <link rel="stylesheet" href="css/normalize.css">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="css/media.css">
   <link rel="icon" href="img/logo.svg" type="image/svg">
@@ -32,71 +32,34 @@
     <section class="clients">
       <div id="clients__container" class="container clients__container">
         <h2 class="clients__title">Клиенты</h2>
-        <table class="clients__table table">
-          <thead class="table__top">
-            <tr class="table__sort-line">
-              <th id="id" class="table__column table__column_id table__column_sorted" data-sort-direction="asc">
-                <span class="column__text">ID</span>
-              </th>
-              <th id="surname" class="table__column table__column_fullname">
-                <span class="column__text">Фамилия Имя Отчество</span>
-                <span class="column__alphabet-sort">А-Я</span>
-              </th>
-              <th id="createdAt" class="table__column table__column_created-time">
-                <span class="column__text">Дата и&nbsp;время создания</span>
-              </th>
-              <th id="updatedAt" class="table__column table__column_updated-time">
-                <span class="column__text">Последние изменения</span>
-              </th>
-              <th id="contacts" class="table__column">Контакты</th>
-              <th id="actions" class="table__column">Действия</th>
-            </tr>
-          </thead>
-          <tbody id="table__main" class="table__main">
-          </tbody>
-        </table>
+        <div class="clients_wrapper">
+          <table class="clients__table table">
+            <thead class="table__top">
+              <tr class="table__sort-line">
+                <th id="id" class="table__column table__column_id table__column_sorted" data-sort-direction="asc">
+                  <span class="column__text">ID</span>
+                </th>
+                <th id="surname" class="table__column table__column_fullname">
+                  <span class="column__text">Фамилия Имя Отчество</span>
+                  <span class="column__alphabet-sort">А-Я</span>
+                </th>
+                <th id="createdAt" class="table__column table__column_created-time">
+                  <span class="column__text">Дата и&nbsp;время создания</span>
+                </th>
+                <th id="updatedAt" class="table__column table__column_updated-time">
+                  <span class="column__text">Последние изменения</span>
+                </th>
+                <th id="contacts" class="table__column">Контакты</th>
+                <th id="actions" class="table__column">Действия</th>
+              </tr>
+            </thead>
+            <tbody id="table__main" class="table__main">
+            </tbody>
+          </table>
+        </div>
         <div id="loading-spinner" class="clients__loading-spinner animate__animated">
           <span class="loader"></span>
         </div>
-        <!-- <dialog class="clients__edit-modal modal animate__animated animate__fadeInDown" open="">
-          <div class="modal__top">
-            <buttton class="btn btn_close"></buttton>
-            <h2 class="modal__title">Изменить данные</h2>
-            <span class="modal__id">ID: 1705654525030</span>
-          </div>
-          <form class="modal__form form">
-            <div class="form__top">
-              <label class="form__label">
-                <span class="form__text form__text_required">Фамилия</span>
-                <input class="form__input">
-              </label>
-              <label class="form__label">
-                <span class="form__text form__text_required">Имя</span>
-                <input class="form__input">
-              </label>
-              <label class="form__label">
-                <span class="form__text">Отчество</span>
-                <input class="form__input"></label>
-            </div>
-            <div class="contacts-modal">
-              <ul class="contacts-modal__list list-reset">
-                <li class="contacts-modal__item">
-                  <div class="contacts-modal__type-selector">Телефон</div>
-                  <input class="contacts-modal__input" placeholder="Введите данные контакта">
-                  <button class="btn btn_delete-modal"></button>
-                </li>
-                <li class="contacts-modal__item">
-                  <div class="contacts-modal__type-selector">Телефон</div>
-                  <input class="contacts-modal__input" placeholder="Введите данные контакта">
-                  <button class="btn btn_delete-modal"></button>
-                </li>
-              </ul>
-              <button class="btn btn_add-contact">Добавить контакт</button>
-            </div>
-            <button class="btn btn_submit">Сохранить</button>
-            <button class="btn btn_cancel">Удалитьклиента</button>
-          </form>
-        </dialog> -->
       </div>
     </section>
   </main>
