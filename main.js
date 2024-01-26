@@ -287,21 +287,22 @@
           submitButton.classList.add(`btn_submit_active`);
           let response;
 
+
           if (status === `edit`) {
             response = await api.editClient({
               id: clientObj.id,
-              name: nameInput.value,
-              surname: surnameInput.value,
-              lastName: lastNameInput.value,
+              name: formatUpperCase(nameInput.value),
+              surname: formatUpperCase(surnameInput.value),
+              lastName: formatUpperCase(lastNameInput.value),
               contacts: contactsList,
             })
           }
 
           if (status === `create`) {
             response = await api.createClient({
-              name: nameInput.value,
-              surname: surnameInput.value,
-              lastName: lastNameInput.value,
+              name: formatUpperCase(nameInput.value),
+              surname: formatUpperCase(surnameInput.value),
+              lastName: formatUpperCase(lastNameInput.value),
               contacts: contactsList,
             })
           }
@@ -338,6 +339,10 @@
 
   function isContactsContainerFull(container) {
     return container.getElementsByClassName(`contacts-modal__item`).length === 10;
+  }
+
+  function formatUpperCase(str) { // Форматирование имени, фамилии или отчества. 
+    return str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
   }
 
   function createContactItem(contact, contactsContainer, buttonAddContact) { // Создание элемента контактов
