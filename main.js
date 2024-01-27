@@ -142,7 +142,6 @@
     const actionsButtonsItem = createElement(`div`, [`col_actions`]);
     const editButton = createElement(`button`, [`btn`, `btn_edit-client`], `Изменить`);
     const deleteButton = createElement(`button`, [`btn`, `btn_delete-client`], `Удалить`);
-    console.log(id);
 
     editButton.addEventListener(`click`, async () => {
       editButton.classList.toggle(`btn_edit-client_active`);
@@ -285,9 +284,10 @@
 
         if (!cancelAddStudent) {
           submitButton.classList.add(`btn_submit_active`);
+
+          const overlay = createOverlay(modalWindow);
+
           let response;
-
-
           if (status === `edit`) {
             response = await api.editClient({
               id: clientObj.id,
@@ -526,6 +526,12 @@
     setTimeout(() => {
       element.remove()
     }, 400);
+  }
+
+  function createOverlay(page) {
+    const overlay = document.createElement(`div`);
+    overlay.id = `overlay`;
+    page.append(overlay);
   }
 
   function debounce(func, ms) {
