@@ -142,6 +142,7 @@
     const actionsButtonsItem = createElement(`div`, [`col_actions`]);
     const editButton = createElement(`button`, [`btn`, `btn_edit-client`], `Изменить`);
     const deleteButton = createElement(`button`, [`btn`, `btn_delete-client`], `Удалить`);
+    console.log(id);
 
     editButton.addEventListener(`click`, async () => {
       editButton.classList.toggle(`btn_edit-client_active`);
@@ -268,7 +269,21 @@
           if (element.value.trim().length === 0) {
 
             cancelAddStudent = true;
-            errorText.textContent = `Ошибка: Одно из полей в контактах пустое`
+            errorText.textContent = `Ошибка: Одно из полей в контактах пустое`;
+            contacts.after(errorText);
+            return
+          }
+
+          if ((element.type === `Email`) && (!element.value.includes(`@`))) {
+            cancelAddStudent = true;
+            errorText.textContent = `Ошибка: В поле "Email" неверно указана почта`;
+            contacts.after(errorText);
+            return
+          }
+
+          if ((element.type === `Телефон`) && (element.value.length < 11)) {
+            cancelAddStudent = true;
+            errorText.textContent = `Ошибка: Номер телефона должен состоять как минимум из 11 цифр`;
             contacts.after(errorText);
           }
         });
@@ -277,17 +292,16 @@
           if (element.value.trim().length === 0) {
 
             cancelAddStudent = true;
-            errorText.textContent = `Ошибка: Одно из полей пустое`
+            errorText.textContent = `Ошибка: Одно из полей пустое`;
             contacts.after(errorText);
           }
         });
 
         if (!cancelAddStudent) {
           submitButton.classList.add(`btn_submit_active`);
-
-          const overlay = createOverlay(modalWindow);
-
           let response;
+
+
           if (status === `edit`) {
             response = await api.editClient({
               id: clientObj.id,
@@ -313,6 +327,8 @@
       })
     }
   }
+
+
 
   function contactsInModal(clientObj, errorText, contacts, buttonAddContact) {
     const contactsContainer = createElement(`ul`, [`list-reset`, `contacts-modal__list`]);
@@ -424,7 +440,7 @@
           return;
         }
 
-        if (sortDirection == `desc`) {
+        if (sortDirection === `desc`) {
           column.classList.remove(`table__column_sorted`);
           renderClientsList(sortClientsList(clientsList, column.id, true), pageElements.table);
           return;
@@ -526,12 +542,6 @@
     setTimeout(() => {
       element.remove()
     }, 400);
-  }
-
-  function createOverlay(page) {
-    const overlay = document.createElement(`div`);
-    overlay.id = `overlay`;
-    page.append(overlay);
   }
 
   function debounce(func, ms) {
